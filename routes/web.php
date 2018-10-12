@@ -8,7 +8,7 @@ $this->group(['middleware' => ['auth'],'namespace' => 'Admin','prefix' => 'admin
     $this->post('deposit', 'BalanceController@depositStore')->name('deposit.store');
     $this->post('withdrawn', 'BalanceController@withdrawnStore')->name('withdrawn.store');
 
-    $this->post('historic-search', 'BalanceController@searchHistoric')->name('historic.search');
+    $this->any('historic-search', 'BalanceController@searchHistoric')->name('historic.search');
     
 
     $this->get('historic', 'BalanceController@historic')->name('admin.historic');
