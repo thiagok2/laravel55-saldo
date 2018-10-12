@@ -42,6 +42,12 @@ class Historic extends Model
 	{
 		return Carbon::parse($value)->format('d/m/Y');
     }
+
+    /**Método de escopo com prefixo ::scope:: */
+    public function scopeUserAuth($query)
+	{
+		return $query->where('user_id', auth()->user()->id);
+	}
     
     public function search(Array $data, $totalPage)
 	{
@@ -56,9 +62,9 @@ class Historic extends Model
 				$query->where('type', $data['type']);
 			}
 		})//->toSql(); dd($historics);
-		// ->where('user_id', auth()->user()->id)
-		//->userAuth()
-		//->with(['userSender'])
+		//->where('user_id', auth()->user()->id)
+		->userAuth()
+		->with(['userSender'])
 		->paginate($totalPage);
 	}
     
