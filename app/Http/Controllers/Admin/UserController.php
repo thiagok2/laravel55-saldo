@@ -22,7 +22,33 @@ class UserController extends Controller
             unset($data['password']);
         }
 
+
+        $data['image'] = $user->image;
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            if ($user->image) {
+                $name = $user->image;
+            }
+            else {
+                $name = $user->id.kebab_case($user->name);
+            }
+
+            $extension = $request->image->extension();
+            $nameFile = "{$name}.{$extension}";
+            $data['image'] = $nameFile;
+
+            $upload = $request->image->storeAs('users', $nameFile);
+        }
+
+
+
+
+
         $update = $user->update($data);
+
+
+
+
+
         if ($update) {
           return redirect()
                 ->route('profile')
